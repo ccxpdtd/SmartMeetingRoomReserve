@@ -43,7 +43,7 @@
         <el-dropdown trigger="click" @command="handleCommand">
           <span class="user-link">
             <img src="https://picsum.photos/id/1005/200/200" alt="用户头像" class="user-avatar">
-            <span class="user-name">管理员</span>
+            <span class="user-name">{{ username }}</span>
             <i class="el-icon-arrow-down"></i>
           </span>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -62,34 +62,43 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 export default {
   name: 'myTabbar',
   data() {
     return {
-      currentPage: '仪表盘'
     }
   },
   computed: {
+    ...mapState({
+      username: state => state.user.username,
+      role: state => state.user.role
+    })
+  },
+  mounted() {
 
   },
   methods: {
+
     toggleSidebar() {
 
     },
     handleCommand(command) {
       if (command === '账户设置') {
         this.goToPersonal()
+      } else if (command === '退出登录') {
+        this.goToLogin()
       }
     },
     goToPersonal() {
       this.$router.push({ path: '/personal/user-info' })
+    },
+    goToLogin() {
+      this.$router.push({ path: '/login' })
+      localStorage.removeItem('token')
     }
   },
-  mounted() {
-    // console.log('tabbar:$route', this.$route);
 
-  }
 }
 </script>
 

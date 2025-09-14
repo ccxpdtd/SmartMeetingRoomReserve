@@ -23,10 +23,9 @@ export default {
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    /* 超出时出现竖向滚动条 */
-    // background: #dfdfdf;
+
     box-sizing: border-box;
-    padding: 25px;
+    padding: 10px;
   }
 
 }

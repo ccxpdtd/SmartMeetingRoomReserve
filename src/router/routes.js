@@ -1,7 +1,8 @@
 import Layout from "../layout/index.vue"
+import Login from '../view/login/index.vue'
 
 //无孩
-import Status from '../view/status/index.vue'
+import States from '../view/roombooking/states/index.vue'
 import RoomBooking from '../view/roombooking/index.vue'
 import MyBookings from '../view/mybookings/index.vue'
 import Statistics from '../view/statistics/index.vue'
@@ -23,22 +24,13 @@ export const myRoutes = [
     path: "/",
     component: Layout,
     name: 'layout',
+    redirect: '/room-booking',
     meta: {
       title: '首页',
       hidden: true,
       icon: 'el-icon-s-home'
     },
     children: [
-      {
-        path: '/status',
-        component: Status,
-        name: 'Status',
-        meta: {
-          title: '状态面板',
-          hidden: false,
-          icon: 'el-icon-view',
-        }
-      },
       {
         path: '/room-booking',
         component: RoomBooking,
@@ -67,6 +59,17 @@ export const myRoutes = [
           title: '统计报表',
           hidden: false,
           icon: 'el-icon-s-data',
+        }
+      },
+      {
+        path: '/states',
+        component: States,
+        name: 'States',
+        query: {},
+        meta: {
+          title: '状态面板',
+          hidden: true,
+          icon: 'el-icon-view',
         }
       },
     ]
@@ -172,7 +175,7 @@ export const myRoutes = [
 
   {
     path: "/login",
-    // component: Login,
+    component: Login,
     name: 'login',
     meta: {
       title: '登录',

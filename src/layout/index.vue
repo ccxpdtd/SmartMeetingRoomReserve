@@ -24,6 +24,8 @@
 
 <script>
 // import { mapState } from 'vuex'
+import { jwtDecode } from "jwt-decode";
+
 import Slider from './slider/index.vue'
 import Tabbar from './tabbar/index.vue'
 import Main from './main/index.vue'
@@ -39,14 +41,35 @@ export default {
       myRoutes: []
     }
   },
-  computed: {
-
+  methods: {
+    parsingToken() {
+      const token = localStorage.getItem('token')
+      if (token) {
+        try {
+          const decoded = jwtDecode(token)
+          // 把解析出来的用户信息放进 Vuex
+          this.$store.commit('setUser', {
+            id: decoded.id,
+            username: decoded.username,
+            role: decoded.role
+          })
+        } catch (e) {
+          console.error('Token 解析失败:', e)
+        }
+      }
+    }
   },
   mounted() {
+    //解析token
+    this.parsingToken()
+    //
     this.myRoutes = this.$store.state.myRoutes
-    // console.log('layout:myRoutes', this.myRoutes);
 
-  }
+  },
+
+
+
+
 }
 </script>
 
@@ -116,12 +139,11 @@ export default {
   .home_main {
     width: calc(100% - $home_slider_width);
     height: calc(100vh - $home_tabbar_height);
-    // background-color: rgb(235, 205, 149);
 
     position: absolute;
     top: $home_tabbar_height;
     left: $home_slider_width;
-    padding: 40px;
+    padding: 0 40px;
 
   }
 
