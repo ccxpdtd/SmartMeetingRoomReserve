@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState({
-      uid: state => state.user.id,
+      uid: state => state.userInfo.id,
     })
   },
   mounted() {
@@ -60,15 +60,17 @@ export default {
       const payload = {
         user_id: this.uid,
         room_id: this.id,
-        start_time: this.form.date + ' ' + this.form.timeRange[0],
-        end_time: this.form.date + ' ' + this.form.timeRange[1],
+        reservation_date: this.form.date,
+        start_time: this.form.timeRange[0],
+        end_time: this.form.timeRange[1],
         reason: this.form.reason,
       }
-
-
-      await this.$store.dispatch('post', { url, payload })
-
-
+      const res = await this.$store.dispatch('post', { url, payload })
+      if (res.data.code === 200) {
+        this.$message.success(res.data.msg)
+        this.$router.push({ path: '/room-booking' })
+      } else
+        this.$message.error(res.data.msg)
     }
   }
 }

@@ -71,8 +71,8 @@ export default {
   },
   computed: {
     ...mapState({
-      username: state => state.user.username,
-      role: state => state.user.role
+      username: state => state.userInfo.username,
+      role: state => state.user.userInfo.role
     })
   },
   mounted() {

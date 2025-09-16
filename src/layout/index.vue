@@ -48,7 +48,7 @@ export default {
         try {
           const decoded = jwtDecode(token)
           // 把解析出来的用户信息放进 Vuex
-          this.$store.commit('setUser', {
+          this.$store.commit('setUserInfo', {
             id: decoded.id,
             username: decoded.username,
             role: decoded.role
@@ -65,10 +65,11 @@ export default {
     //
     this.myRoutes = this.$store.state.myRoutes
 
+    this.$bus.$on('parsingToken', this.parsingToken)
   },
-
-
-
+  beforeDestroy() {
+    this.$bus.$off('parsingToken', this.parsingToken)
+  },
 
 }
 </script>

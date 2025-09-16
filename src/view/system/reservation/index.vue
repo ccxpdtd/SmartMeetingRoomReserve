@@ -46,33 +46,24 @@
 <script>
 // import { mapState } from 'vuex'
 export default {
-  name: "myBookings",
+  name: "AllBookings",
   data() {
     return {
-      // user_id: Number(localStorage.getItem('userId')),
+      user_id: Number(localStorage.getItem('userId')),
     };
   },
   computed: {
-    user_id() {
-      return this.$store.state.userInfo.id
-    },
     rooms() {
       return this.$store.state.rooms
     },
     reservations() {
       return this.$store.state.reservations
     },
-    personalReservations() {
-      return this.reservations.filter(r => {
-        return r.user_id === this.user_id
-      })
-    },
     handlePersonalReservations() {
       let a = []
-      this.personalReservations.forEach(item => {
+      this.reservations.forEach(item => {
         a.push({
           id: item.id,
-          room_id: item.room_id,
           room_name: this.rooms.find(room => room.id === item.room_id).name,
           date: item.reservation_date || '',
           timeRange: item.start_time + ' - ' + item.end_time,
@@ -95,7 +86,7 @@ export default {
     },
 
     async cancelReservation(reservation) {
-      const payload = { id: reservation.id, rid: reservation.room_id }
+      const payload = { id: reservation.id, rname: reservation.room_name }
       const res = await this.$store.dispatch('post', { url: '/api/delete_reservation', payload });
       if (res.data.code === 200) {
         this.$message.success(res.data.msg)

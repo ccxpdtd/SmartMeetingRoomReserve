@@ -16,7 +16,7 @@ import Notice from '../view/personal/notice/index.vue'
 import User from '../view/system/user/index.vue'
 import MeetingRoom from '../view/system/meetingroom/index.vue'
 import Role from '../view/system/role/index.vue'
-import Log from '../view/system/log/index.vue'
+import Reservations from '../view/system/reservation/index.vue'
 
 export const myRoutes = [
 
@@ -149,6 +149,16 @@ export const myRoutes = [
         },
       },
       {
+        path: '/system/reservations',
+        component: Reservations,
+        name: 'Reservations',
+        meta: {
+          title: '预约记录',
+          hidden: false,
+          icon: 'el-icon-document',
+        },
+      },
+      {
         path: '/system/role',
         component: Role,
         name: 'Role',
@@ -158,16 +168,7 @@ export const myRoutes = [
           icon: 'el-icon-postcard',
         },
       },
-      {
-        path: '/system/log',
-        component: Log,
-        name: 'Log',
-        meta: {
-          title: '系统日志',
-          hidden: false,
-          icon: 'el-icon-document',
-        },
-      },
+
     ]
   },
 

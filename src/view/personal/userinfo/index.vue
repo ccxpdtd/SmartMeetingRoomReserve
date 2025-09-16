@@ -2,7 +2,7 @@
   <div class="profile-page" style="padding: 20px; max-width: 600px; margin: auto;">
     <el-card class="box-card">
 
-      <el-descriptions title="用户信息" column="1" border>
+      <el-descriptions title="用户信息" :column=1 border>
         <el-descriptions-item label="用户ID">{{ user.id }}</el-descriptions-item>
         <el-descriptions-item label="用户名">{{ user.username }}</el-descriptions-item>
         <el-descriptions-item label="角色">{{ user.role }}</el-descriptions-item>
@@ -22,9 +22,10 @@ export default {
   name: "UserInfo",
   computed: {
     ...mapState({
-      user: state => state.user
+      user: state => state.userInfo
     })
   },
+
   methods: {
     editProfile() {
       // 可跳转到修改密码或编辑信息页面

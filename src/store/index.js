@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 
 import { myRoutes } from '../router/routes'
 
@@ -14,13 +15,11 @@ const actions = {
   async post(context, value) {
     // console.log('value.url', value.url);
     // console.log('value.payload', value.payload);
-
-
     try {
       const res = await axios.post(value.url, value.payload)
       console.log('post/res:', value.url, res);
       if (res.data.code === 200) {
-        context.dispatch('switchUrl', { url: value.url, data: res.data })
+        context.dispatch('switchUrl', { url: value.url, data: res.data || [] })
       }
       return res
     } catch (error) {
@@ -29,7 +28,7 @@ const actions = {
   },
   async get(context, value) {
     try {
-      const res = await axios.get(value.url)
+      const res = await axios.get(value.url, { params: value.query || {} })
       console.log('get/res:', res);
       if (res.data.code === 200) {
         context.dispatch('switchUrl', { url: value.url, data: res.data })
@@ -48,49 +47,67 @@ const actions = {
       case '/api/get_rooms':
         context.commit('setRooms', data.rooms)
         break
+      case '/api/get_reservations':
+        context.commit('setReservations', data.reservations)
+        break
+
       case '/api/admin/get_users':
-        context.commit('setUsers', data.usersInfo)
+        context.commit('setUsersData', data.usersData)
         break
     }
   },
-
-
 }
 
 //修改state中的数据
 const mutations = {
-  setUser(state, value) {
-    state.user.id = value.id
-    state.user.username = value.username
-    state.user.role = value.role
+  setUserInfo(state, value) {
+    state.userInfo.id = value.id
+    state.userInfo.username = value.username
+    state.userInfo.role = value.role
   },
   setRooms(state, value) {
     state.rooms = value
   },
-  setUsers(state, value) {
-    state.usersInfo.users = value.users
-    state.usersInfo.total = value.total
-  }
+  setReservations(state, value) {
+    state.reservations = value
+  },
+
+  setUsersData(state, value) {
+    state.usersData.users = value.users
+    state.usersData.total = value.total
+  },
 }
 
 //保存具体的数据
 const state = {
   myRoutes: myRoutes,
   token: '',
-  user: {
+
+  userInfo: {
     id: '',
     username: '',
     role: ''
   },
-
   rooms: [],
-  usersInfo: {
+  reservations: [],
+
+  usersData: {
     users: [],
     total: 0,
   },
+
+
 }
+
 
 //创建并暴露store
 export default new Vuex.Store({
-  actions, mutations, state
+  actions, mutations, state,
+  plugins: [
+    createPersistedState({
+      // 关键：只持久化 user 和 rooms 模块，排除 permission、route 等路由相关模块
+      paths: ['rooms', 'reservations', 'usersData'],
+      storage: window.localStorage, // 存储方式不变
+    })
+  ]
 })

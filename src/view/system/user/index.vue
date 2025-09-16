@@ -76,10 +76,10 @@ export default {
   },
   computed: {
     users() {
-      return this.$store.state.usersInfo.users;
+      return this.$store.state.usersData.users;
     },
     total() {
-      return this.$store.state.usersInfo.total;
+      return this.$store.state.usersData.total;
     },
     filusers() {
       return this.users.filter(user => user.username.indexOf(this.searchKey) !== -1)
@@ -96,7 +96,6 @@ export default {
       if (res.data.code !== 200)
         this.$message.error(res.data.msg);
     },
-
     async deleteUser(id) {
       const res = await this.$store.dispatch('post', { url: '/api/admin/delete_user', payload: { id } });
       if (res.data.code === 200) {
@@ -106,20 +105,16 @@ export default {
       else
         this.$message.error(res.data.msg);
     },
-
-
     async changeRole(id, role) {
       role = role === "admin" ? "user" : "admin";
       const res = await this.$store.dispatch('post', { url: '/api/admin/change_role', payload: { id, role } });
-
       if (res.data.code === 200) {
         this.$message.success(res.data.msg);
-        this.getUsers(this.users.length > 1 ? this.pageNo : this.pageNo - 1)
+        this.getUsers(this.pageNo)
       }
       else
         this.$message.error(res.data.msg);
     },
-
     showAddUser() {
       this.currentUser = null;
       this.userFormVisible = true;

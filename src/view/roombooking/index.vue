@@ -72,13 +72,13 @@ export default {
       });
     }
   },
-
   mounted() {
     this.getRooms()
   },
   methods: {
     async getRooms() {
-      const res = await this.$store.dispatch("get", { url: "/api/get_rooms" });
+      const url = "/api/get_rooms"
+      const res = await this.$store.dispatch("get", { url });
       if (res.data.code !== 200) {
         this.$message.error(res.data.msg || "获取会议室失败");
       }

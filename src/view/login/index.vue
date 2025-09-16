@@ -34,7 +34,6 @@ export default {
     async login() {
       const payload = { username: this.form.username, password: this.form.password }
       const url = '/api/login'
-
       const res = await this.$store.dispatch('post', { url, payload })
       if (res.data.code === 200) {
         this.$message.success('登录成功')

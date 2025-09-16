@@ -21,20 +21,21 @@ export default {
   },
   data() {
     return {
-      room: {}
+      room: {},
     }
   },
   mounted() {
-    this.getState()
+    this.getRoomAndReservations()
   },
   methods: {
-    getState() {
+    getRoomAndReservations() {
+      //获取会议室
       const id = Number(this.$route.query.id)
-      const r = this.$store.state.rooms.find(room => room.id === id)
-      if (r) {
-        // 给近期预约添加默认空数组，避免子组件报错
-        this.room = { ...r, recentReservations: r.recentReservations || [] }
-      }
+      this.room = this.$store.state.rooms.find(room => room.id === id)
+      //获取预约记录
+      // this.$store.commit('setRoom', this.room)
+
+
     }
   }
 }
