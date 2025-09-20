@@ -2,15 +2,13 @@
   <div class="profile-page" style="padding: 20px; max-width: 600px; margin: auto;">
     <el-card class="box-card">
 
-      <el-descriptions title="用户信息" :column=1 border>
+      <el-descriptions title="个人信息" :column=1 border>
         <el-descriptions-item label="用户ID">{{ user.id }}</el-descriptions-item>
         <el-descriptions-item label="用户名">{{ user.username }}</el-descriptions-item>
-        <el-descriptions-item label="角色">{{ user.role }}</el-descriptions-item>
+        <!-- <el-descriptions-item label="角色">{{ user.role }}</el-descriptions-item> -->
       </el-descriptions>
 
-      <div style="text-align: center; margin-top: 20px;">
-        <el-button type="primary" @click="editProfile">编辑信息</el-button>
-      </div>
+
     </el-card>
   </div>
 </template>
@@ -27,10 +25,7 @@ export default {
   },
 
   methods: {
-    editProfile() {
-      // 可跳转到修改密码或编辑信息页面
-      this.$router.push("/profile/edit");
-    }
+
   }
 };
 </script>

@@ -42,7 +42,6 @@ export default {
         timeRange: '',
         reason: '',
       }
-
     }
   },
   computed: {

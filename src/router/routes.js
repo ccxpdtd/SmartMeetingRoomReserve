@@ -15,8 +15,7 @@ import Notice from '../view/personal/notice/index.vue'
 // import System from '../view/system/index.vue'
 import User from '../view/system/user/index.vue'
 import MeetingRoom from '../view/system/meetingroom/index.vue'
-import Role from '../view/system/role/index.vue'
-import Reservations from '../view/system/reservation/index.vue'
+import AllBookings from '../view/system/allbookings/index.vue'
 
 export const myRoutes = [
 
@@ -28,7 +27,7 @@ export const myRoutes = [
     meta: {
       title: '首页',
       hidden: true,
-      icon: 'el-icon-s-home'
+      icon: 'el-icon-s-home',
     },
     children: [
       {
@@ -149,25 +148,16 @@ export const myRoutes = [
         },
       },
       {
-        path: '/system/reservations',
-        component: Reservations,
-        name: 'Reservations',
+        path: '/system/allbookings',
+        component: AllBookings,
+        name: 'AllBookings',
         meta: {
           title: '预约记录',
           hidden: false,
           icon: 'el-icon-document',
         },
       },
-      {
-        path: '/system/role',
-        component: Role,
-        name: 'Role',
-        meta: {
-          title: '角色权限',
-          hidden: false,
-          icon: 'el-icon-postcard',
-        },
-      },
+
 
     ]
   },

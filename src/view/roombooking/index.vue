@@ -74,6 +74,7 @@ export default {
   },
   mounted() {
     this.getRooms()
+    this.getReservations()
   },
   methods: {
     async getRooms() {
@@ -81,6 +82,13 @@ export default {
       const res = await this.$store.dispatch("get", { url });
       if (res.data.code !== 200) {
         this.$message.error(res.data.msg || "获取会议室失败");
+      }
+    },
+    async getReservations() {
+      const url = '/api/get_reservations'
+      const res = await this.$store.dispatch('get', { url })
+      if (res.data.code !== 200) {
+        this.$message.error(res.data.msg || "获取预约记录失败");
       }
     },
     goToState(id) {

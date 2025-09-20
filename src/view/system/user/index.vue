@@ -34,11 +34,7 @@
             </template>
           </el-popconfirm>
 
-          <el-popconfirm title="确定修改用户权限?" @confirm="changeRole(row.id, row.role)">
-            <template slot="reference">
-              <el-button type="warning" icon="el-icon-postcard" circle size="small"></el-button>
-            </template>
-          </el-popconfirm>
+
 
           <el-popconfirm title="确定修改用户密码?" @confirm="showEditUser(row)" style="margin-left:5px;">
             <template slot="reference">
@@ -101,16 +97,6 @@ export default {
       if (res.data.code === 200) {
         this.$message.success(res.data.msg);
         this.getUsers(this.users.length > 1 ? this.pageNo : this.pageNo - 1)
-      }
-      else
-        this.$message.error(res.data.msg);
-    },
-    async changeRole(id, role) {
-      role = role === "admin" ? "user" : "admin";
-      const res = await this.$store.dispatch('post', { url: '/api/admin/change_role', payload: { id, role } });
-      if (res.data.code === 200) {
-        this.$message.success(res.data.msg);
-        this.getUsers(this.pageNo)
       }
       else
         this.$message.error(res.data.msg);

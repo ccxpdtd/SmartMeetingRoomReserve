@@ -1,7 +1,5 @@
 <template>
   <div class="my-reservations-container">
-    <!-- 页面标题 -->
-    <h2 class="page-title">我的预约</h2>
 
     <!-- 预约列表表格 -->
     <el-card class="table-card">
@@ -18,11 +16,8 @@
         <!-- 状态列 -->
         <el-table-column label="状态" width="120" align="center">
           <template slot-scope="scope">
-            <el-tag :type="scope.row.status === '0'
-              ? 'success'
-              : scope.row.status === '1'
-                ? 'info'
-                : 'danger'">
+            <el-tag :type="scope.row.state === '未开始'
+              ? 'success' : 'danger'">
               {{ scope.row.state }}
             </el-tag>
           </template>
@@ -86,7 +81,8 @@ export default {
     },
 
     async cancelReservation(reservation) {
-      const payload = { id: reservation.id, rname: reservation.room_name }
+      const room_id = this.rooms.find(item => item.name === reservation.room_name).id
+      const payload = { id: reservation.id, rid: room_id }
       const res = await this.$store.dispatch('post', { url: '/api/delete_reservation', payload });
       if (res.data.code === 200) {
         this.$message.success(res.data.msg)
@@ -110,15 +106,7 @@ export default {
 <style scoped>
 .my-reservations-container {
   padding: 24px;
-  background: #f5f7fa;
   min-height: 100vh;
-}
-
-.page-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #333;
 }
 
 .table-card {

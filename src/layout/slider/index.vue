@@ -42,11 +42,7 @@
             <mySlider :myRoutes="route.children"></mySlider>
           </el-submenu>
         </template>
-
-
       </div>
-
-
     </el-menu>
 
   </div>

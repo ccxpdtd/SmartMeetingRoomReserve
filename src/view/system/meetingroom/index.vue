@@ -8,9 +8,10 @@
 
     <div class="table-wrapper">
       <el-table :data="filusers" stripe style="width: 100%">
-        <el-table-column prop="name" label="会议室名称" width="150" align="center" />
-        <el-table-column prop="floor" label="楼层" width="100" align="center" />
-        <el-table-column prop="capacity" label="容量" width="100" align="center" />
+        <el-table-column prop="name" label="会议室名称" width="100" align="center" />
+        <el-table-column prop="floor" label="楼层" width="70" align="center" />
+        <el-table-column prop="capacity" label="容量" width="70" align="center" />
+        <el-table-column prop="reservation_count" label="预约数" width="70" align="center" />
         <el-table-column prop="state" label="状态" width="100" align="center" />
         <el-table-column prop="equipment" label="设备配置" align="center" />
         <el-table-column prop="remark" label="备注" align="center" />

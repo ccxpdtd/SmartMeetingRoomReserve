@@ -18,25 +18,24 @@
     <div class="info-content">
       <div class="info-section">
         <h4 class="section-title">设备配置</h4>
-        <div class="equipment-list">
-          <el-tag size="mini" class="equipment-tag">高清投影</el-tag>
-          <el-tag size="mini" class="equipment-tag">视频会议系统</el-tag>
-          <el-tag size="mini" class="equipment-tag">电子白板</el-tag>
-          <el-tag size="mini" class="equipment-tag">空调</el-tag>
+        <div class="equipment-list" v-for="(e, index) in room.equipment" :key="index">
+          <el-tag size="mini" class="equipment-tag">{{ e }}</el-tag>
         </div>
       </div>
 
       <div class="info-section">
         <h4 class="section-title">会议室备注</h4>
-        <p class="remark-text">{{ room.remark || '该会议室支持最大 12 人团队会议，配备双屏投影，适合远程协作与方案演示，使用后请保持环境整洁。' }}</p>
+        <p class="remark-text">{{ room.remark || `该会议室支持最多 ${room.capacity} 人团队会议，配备双屏投影，适合远程协作与方案演示，使用后请保持环境整洁。` }}</p>
       </div>
 
       <div class="info-section">
         <h4 class="section-title">近期预约概览</h4>
         <div class="recent-reserve">
           <div v-for="r in room.recentReservations" :key="r.id" class="reserve-item">
-            <span class="reserve-time">{{ r.start_time }}-{{ r.end_time }}</span>
-            <span class="reserve-user">预约人：{{ r.username }}</span>
+            <span class="reserve-time">{{ r.date }}</span>
+            <span class="reserve-time">{{ r.timeRange }}</span>
+            <span class="reserve-user">预约人：{{ r.user_name }}</span>
+            <!-- <span class="reserve-user">{{ r.state }}</span> -->
           </div>
         </div>
       </div>
@@ -49,6 +48,10 @@ export default {
   name: 'RoomInfoCard',
   props: {
     room: { type: Object, required: true }
+  },
+  mounted() {
+    console.log('@', this.room);
+
   },
   methods: {
     statusText(state) {
@@ -122,11 +125,14 @@ export default {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    display: inline-block;
+    /* 转为行内块，横向排列 */
 
     .equipment-tag {
       background-color: #f0f7ff;
       color: #409eff;
       border-color: #c6e2ff;
+      margin: 0 2px;
     }
   }
 
@@ -149,14 +155,9 @@ export default {
       background-color: #fafafa;
       border-radius: 6px;
       font-size: 14px;
+      color: #666;
 
-      .reserve-time {
-        color: #333;
-      }
 
-      .reserve-user {
-        color: #666;
-      }
     }
   }
 }

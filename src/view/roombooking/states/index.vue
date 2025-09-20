@@ -2,7 +2,7 @@
   <div class="room-detail-wrapper">
     <div class="card-container">
       <!-- 左侧信息卡片 -->
-      <RoomInfoCard :room="room" />
+      <RoomInfoCard :room="handleRoom" />
       <!-- 右侧预约卡片 -->
       <RoomReserveCard :id="Number(this.$route.query.id)" />
     </div>
@@ -21,22 +21,50 @@ export default {
   },
   data() {
     return {
-      room: {},
+      // room: {},
+      // handleRoom: {}
     }
+  },
+  computed: {
+    users() {
+      return this.$store.state.usersData.users
+    },
+    room() {
+      return this.$store.state.rooms.find(item => item.id === Number(this.$route.query.id))
+    },
+    reservations() {
+      return this.$store.state.reservations.filter(item => item.room_id === this.room.id)
+    },
+    handleRoom() {
+      let handleReservations = []
+
+      const equipmentArr = this.room.equipment
+        ? this.room.equipment.split(' ')
+        : [];
+
+      this.reservations.forEach(item => {
+        handleReservations.push({
+          id: item.id,
+          date: item.reservation_date || '',
+          timeRange: item.start_time + ' - ' + item.end_time,
+          user_name: this.users.find(u => u.id === item.user_id).username,
+          reason: item.reason,
+          state: item.state === 0 ? '未开始' : item.state === 1 ? '正在进行' : '已结束'
+        })
+      });
+      return {
+        ...this.room,
+        equipment: equipmentArr,
+        recentReservations: handleReservations
+      }
+    }
+
   },
   mounted() {
-    this.getRoomAndReservations()
+
   },
   methods: {
-    getRoomAndReservations() {
-      //获取会议室
-      const id = Number(this.$route.query.id)
-      this.room = this.$store.state.rooms.find(room => room.id === id)
-      //获取预约记录
-      // this.$store.commit('setRoom', this.room)
 
-
-    }
   }
 }
 </script>
